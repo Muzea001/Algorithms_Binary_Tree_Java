@@ -84,29 +84,28 @@ public class SBinTre<T> {
     }
 
     public boolean leggInn(T verdi) {
-        Objects.requireNonNull(verdi,"Kan ikke ha nullverdier");
+        Objects.requireNonNull(verdi, "Kan ikke ha nullverdier");
 
         //p starter i roten. Lager et hjelpevariabel
         Node<T> p = rot,
                 q = null;
         int midlertidig = 0;
 
-        while (p!=null){
-            q=p;
-            midlertidig=comp.compare(verdi,p.verdi);
-            p = midlertidig< 0 ? p.venstre : p.høyre;
+        while (p != null) {
+            q = p;
+            midlertidig = comp.compare(verdi, p.verdi);
+            p = midlertidig < 0 ? p.venstre : p.høyre;
         }
 
-        p = new Node<>(verdi,null);
+        p = new Node<>(verdi, null);
 
-        if (q==null) rot=p;
-        else if(midlertidig<0) q.venstre=p;
+        if (q == null) rot = p;
+        else if (midlertidig < 0) q.venstre = p;
         else q.høyre = p;
 
-        if (q!=null){
-            p.forelder=q;
-        }
-        else {
+        if (q != null) {
+            p.forelder = q;
+        } else {
             p.forelder = null;
         }
         antall++;
@@ -123,23 +122,23 @@ public class SBinTre<T> {
     }
 
     public int antall(T verdi) {
-
         if (verdi == null) {
             return 0;
         }
         int antall = 0;
-
         Node<T> p = rot;
-
-        while (p != null) {
+        while (p!= null) {
             int midlertidig = comp.compare(verdi, p.verdi);
-            if (midlertidig < 0) p = p.venstre;
-            else{
-                if (midlertidig==0){
+            if (midlertidig < 0){
+                p = p.venstre;
+            }
+            else {
+                if (midlertidig == 0) {
                     antall++;
-                    p=p.høyre;
                 }
-        }
+                    p = p.høyre;
+
+            }
 
         }
 
@@ -152,15 +151,38 @@ public class SBinTre<T> {
     }
 
     private static <T> Node<T> førstePostorden(Node<T> p) {
-        throw new UnsupportedOperationException("Ikke kodet ennå!");
+        Objects.requireNonNull(p);
+        while (true) {
+            if (p.venstre != null) {
+                p = p.venstre;
+            } else if (p.høyre != null) {
+                p = p.høyre;
+            } else {
+                return p;
+            }
+        }
     }
 
     private static <T> Node<T> nestePostorden(Node<T> p) {
-        throw new UnsupportedOperationException("Ikke kodet ennå!");
+        Node<T> f = p.forelder;
+        if (f == null) {
+            return null;
+        }
+
+        if (f.høyre == p || f.høyre == null) {
+            return f;
+        } else return førstePostorden(f.høyre);
     }
 
     public void postorden(Oppgave<? super T> oppgave) {
-        throw new UnsupportedOperationException("Ikke kodet ennå!");
+        Node<T> p = rot;
+
+        Node<T> første = førstePostorden(p);
+        oppgave.utførOppgave(første.verdi);
+        while (første.forelder != null) {
+            første = nestePostorden(første);
+            oppgave.utførOppgave(Objects.requireNonNull(første.verdi));
+        }
     }
 
     public void postordenRecursive(Oppgave<? super T> oppgave) {
