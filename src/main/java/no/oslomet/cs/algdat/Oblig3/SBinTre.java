@@ -124,12 +124,27 @@ public class SBinTre<T> {
 
     public int antall(T verdi) {
 
-        if(verdi == null){
+        if (verdi == null) {
             return 0;
         }
+        int antall = 0;
 
+        Node<T> p = rot;
 
-        ;
+        while (p != null) {
+            int midlertidig = comp.compare(verdi, p.verdi);
+            if (midlertidig < 0) p = p.venstre;
+            else{
+                if (midlertidig==0){
+                    antall++;
+                    p=p.høyre;
+                }
+        }
+
+        }
+
+        return antall;
+
     }
 
     public void nullstill() {
