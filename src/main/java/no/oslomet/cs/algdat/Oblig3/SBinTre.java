@@ -45,9 +45,9 @@ public class SBinTre<T> {
 
     public boolean inneholder(T verdi) {
         if (verdi == null) return false;
-
+        //setter peker til rot.
         Node<T> p = rot;
-
+        //traverserer gjennom treet og sjekker verdien ved bruk av comperator;
         while (p != null) {
             int cmp = comp.compare(verdi, p.verdi);
             if (cmp < 0) p = p.venstre;
