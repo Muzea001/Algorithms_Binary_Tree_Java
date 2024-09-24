@@ -6,5 +6,5 @@ Oppgaven er levert av følgende student:
 
 
 # Oppgavebeskrivelse
-Oppgaven er en implementasjon av et binært tre, inneholder dannelse av treobjektet og søk av spesifike verdier i treet. 
+Oppgaven er en implementasjon av et binært tre, inneholder dannelse av treobjektet, søk av spesifike verdier i treet, sletting av verdier, swap av verdier og nullstilling av treet. 
 
